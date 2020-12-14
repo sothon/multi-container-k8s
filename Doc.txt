@@ -1,0 +1,29 @@
+12---
+
+minikube start --vm-driver hyperv
+minikube start --vm-driver hyperv --hyperv-virtual-switch "Minikube Switch"
+minikube stop
+
+minikube status
+kubectl cluster-info
+
+kubectl apply -f .\client-pod.yaml
+kubectl apply -f .\client-node-port.yaml
+kubectl delete -f .\client-pod.yaml
+
+kubectl get pods
+kubectl get services
+
+13---
+
+kubectl describe pod client-pod
+kubectl apply -f .\client-deployment.yaml
+kubectl get deployments
+kubectl describe pods
+kubectl set image deployment/client-deployment client=stephengrider/multi-client:v5 
+
+14---
+
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=pgpassword
+minikube addons enable ingress
+kubectl get pods -n kube-system
